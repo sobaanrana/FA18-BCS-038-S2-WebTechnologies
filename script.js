@@ -82,7 +82,7 @@ function addProduct() {
         method: "POST",
         data: {name, price, color, department, description},
         success: function(response) {
-            //after creating making all the input fields empty
+            //after creating product, making all the input fields empty
             $('#name').val("");
             $('#price').val("");
             $('#color').val("");
