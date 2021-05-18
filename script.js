@@ -31,18 +31,17 @@ function readProduct() {
     $.ajax({
         url: "https://usman-recipes.herokuapp.com/api/products",
         method: "GET",
-        error: function(responseponse){
-            //document.getElementById('#products').innerHTML('Error : Products not found!')
+        error: function(response){
             $('#products').html('Error : Products not found!')
         },
-        success: function(responseponse) {
-            console.log(responseponse);
+        success: function(response) {
+            console.log(response);
             
             var products = $('#products');
             products.empty();
 
-            for(var i=0 ; i<responseponse.length ; i++) {
-                var p = responseponse[i];
+            for(var i=0 ; i<response.length ; i++) { //appending all the products to the div #products
+                var p = response[i];
                 products.append(
                     `<div class="product" data-id="${p._id}"> <h2> ${p.name} </h2>  <button class = "btn btn-danger btn-sm float-right" id="deleteBtn">Delete</button><button class = "btn btn-info btn-sm float-right" data-toggle="modal" data-target="#editModal">Edit</button> <b>Price</b> : $ ${p.price} <br> <b>Color</b> : ${p.color} <br> <b>Department</b> : ${p.department} <br> <b>Description</b> : ${p.description} <br></div>`
                     );
@@ -54,7 +53,7 @@ function readProduct() {
 //Getting one Product
 function getOne() {
     var products = $("#products");
-    let id = $("#oneid").val();
+    let id = $("#oneid").val(); //getting id of required product sent by user
     console.log(id);
     
     $.get("https://usman-recipes.herokuapp.com/api/products/" + id, function(response) {
@@ -72,6 +71,7 @@ function getOne() {
 
 //Creating a product
 function addProduct() {
+    //getting all the inputs from user
     var name = $('#name').val();
     var price = $('#price').val();
     var color = $('#color').val();
@@ -81,15 +81,14 @@ function addProduct() {
         url: "https://usman-recipes.herokuapp.com/api/products/",
         method: "POST",
         data: {name, price, color, department, description},
-        success: function(responseponse) {
-            //console.log(responseponse);
-           // ('#products').append('<div>RANA SOBAAN</div>')
+        success: function(response) {
+            //after creating making all the input fields empty
             $('#name').val("");
             $('#price').val("");
             $('#color').val("");
             $('#department').val("");
             $('#description').val("");
-            readProduct();
+            readProduct(); //getting all the products
             $("#addModal").modal("hide");
         }
     });
@@ -97,11 +96,11 @@ function addProduct() {
 }
 
 
-//Deleteing a product
+//Deleting a product
 function deleteProduct() {
-    var btn = $(this);
-    var pDiv = btn.closest('.product');
-    let id = pDiv.attr('data-id');
+    var btn = $(this);  //getting reference
+    var pDiv = btn.closest('.product'); //getting parent using closest function
+    let id = pDiv.attr('data-id');  //getting id from attribute 'data-id' from the parent Div
     console.log(id);
     $.ajax({
         url: "https://usman-recipes.herokuapp.com/api/products/" + id,
@@ -115,9 +114,9 @@ function deleteProduct() {
 
 //Updating a product
 function editProduct() {
-    var btn = $(this);
-    var pDiv = btn.closest('.product');
-    let id = pDiv.attr('data-id');
+    var btn = $(this); //getting reference
+    var pDiv = btn.closest('.product'); //getting parent using closest function
+    let id = pDiv.attr('data-id'); //getting id from attribute 'data-id' from the parent Div
     console.log(id)
     $.get("https://usman-recipes.herokuapp.com/api/products/" + id, function(response) {
         $("#updateId").val(response._id);
