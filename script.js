@@ -56,20 +56,18 @@ function getOne() {
     var products = $("#products");
     let id = $("#oneid").val();
     console.log(id);
-    $.ajax({
-        url: "https://usman-recipes.herokuapp.com/api/products/" + id,
-        method: "GET",
-        error: function(response){
-            products.html("Error! Id not found");
-        },
-        sucess: function(response) {
-            $("#getOneModal").modal("hide");
-            products.empty();
-            products.append(
-                `<div> <h2> ${response.name} </h2>  <button class = "btn btn-danger btn-sm float-right" id="deleteBtn">Delete</button><button class = "btn btn-info btn-sm float-right" data-toggle="modal" data-target="#editModal">Edit</button> <b>Price</b> : $ ${response.price} <br> <b>Color</b> : ${response.color} <br> <b>Department</b> : ${response.department} <br> <b>Description</b> : ${response.description} <br></div>`
-                );
-        }
-    });
+    
+    $.get("https://usman-recipes.herokuapp.com/api/products/" + id, function(response) {
+        console.log(response);
+        
+        products.empty();
+       // var todo = response;
+        $("#getOneModal").modal("hide");
+        products.append(
+            `<div> <h2> ${response.name} </h2>  <button class = "btn btn-danger btn-sm float-right" id="deleteBtn">Delete</button><button class = "btn btn-info btn-sm float-right" data-toggle="modal" data-target="#editModal">Edit</button> <b>Price</b> : $ ${response.price} <br> <b>Color</b> : ${response.color} <br> <b>Department</b> : ${response.department} <br> <b>Description</b> : ${response.description} <br></div>`
+            );
+      });
+      
 }
 
 //Creating a product
