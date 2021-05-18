@@ -17,7 +17,7 @@ $(function () {
             data: {name,price,color,department,description},
             method: 'PUT',
             success: function(response) {
-                readProduct();
+                readProduct(); //displaying all the products along with updated product
                 $("#editModal").modal("hide");
             }
         });
