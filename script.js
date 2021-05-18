@@ -4,7 +4,7 @@ $(function () {
     $("#products").on("click","#deleteBtn",deleteProduct);
     $('#products').on('click',".btn-info",editProduct); //this refers to btn-info
     $('#addBtn').click(addProduct);
-    $('#editBtn').click(function() {
+    $('#editBtn').click(function() {  //updating on 'save button' in modal
         var id = $('#updateId').val();
         var name = $('#updateName').val();
         var price = $('#updatePrice').val();
@@ -118,7 +118,7 @@ function editProduct() {
     var pDiv = btn.closest('.product'); //getting parent using closest function
     let id = pDiv.attr('data-id'); //getting id from attribute 'data-id' from the parent Div
     console.log(id)
-    $.get("https://usman-recipes.herokuapp.com/api/products/" + id, function(response) {
+    $.get("https://usman-recipes.herokuapp.com/api/products/" + id, function(response) {  //getting values of all the fields in modal input fields to edit
         $("#updateId").val(response._id);
         $('#updateName').val(response.name);
         $('#updatePrice').val(response.price);
